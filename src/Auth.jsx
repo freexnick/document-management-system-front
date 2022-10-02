@@ -1,4 +1,7 @@
 import { useState } from "react";
+import axios from "axios";
+import { URL } from "./utils/config";
+import { updateStateOnInput } from "./utils/input";
 
 export const Auth = () => {
   [loginData, setLoginData] = useState({
@@ -6,22 +9,22 @@ export const Auth = () => {
     password: "",
   });
 
-  const updateLoginData = (e) => {
-    let target = e.currentTarget.type;
-    setLoginData((prev) => ({
-      ...prev,
-      [target]: e.target.value,
-    }));
-  };
+  const updateLoginData = (e) => updateStateOnInput(e, setLoginData);
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    console.log(loginData);
+    const result = await axios.post(`${URL}/login`, loginData, {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    console.log(result);
   };
 
   return (
     <form onSubmit={login}>
       <label htmlFor="email">
+        Email:
         <input
           id="email"
           placeholder="email"
@@ -32,6 +35,7 @@ export const Auth = () => {
         />
       </label>
       <label htmlFor="password">
+        Password:
         <input
           id="password"
           placeholder="password"
