@@ -10,9 +10,6 @@ export const Nav = () => {
         <li>
           <Link to="/files">Files</Link>
         </li>
-        <li>
-          <Link to="/add">Add User</Link>
-        </li>
       </ul>
     </nav>
   );
