@@ -31,6 +31,7 @@ export const HandleUser = () => {
   const getUpdatableUser = async () => {
     const { data } = await getUser(params.email);
     delete data._id;
+    if (data?.phone === null) data.phone = "";
     setUserData((prev) => ({ ...prev, ...data }));
   };
 
