@@ -15,7 +15,12 @@ const AuthContextProvider = ({ children }) => {
   const handleAuthorization = async (e, data) => {
     e.preventDefault();
     const result = await login(data);
-    if (result) setStatus({ isLogged: true, role: result.data.role });
+    if (result)
+      setStatus({
+        isLogged: true,
+        role: result.data.role,
+        userId: result.data.userId,
+      });
   };
 
   return (
