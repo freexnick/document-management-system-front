@@ -1,28 +1,20 @@
 import { useState } from "react";
-import axios from "axios";
-import { URL } from "./utils/config";
-import { updateStateOnInput } from "./utils/input";
+import { updateStateOnInput } from "../utils/input";
+import { useAuthContext } from "./AuthContext";
 
 export const Auth = () => {
-  [loginData, setLoginData] = useState({
+  const { handleAuthorization } = useAuthContext();
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
   const updateLoginData = (e) => updateStateOnInput(e, setLoginData);
 
-  const login = async (e) => {
-    e.preventDefault();
-    const result = await axios.post(`${URL}/login`, loginData, {
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    console.log(result);
-  };
+  const handleAuthorizationData = (e) => handleAuthorization(e, loginData);
 
   return (
-    <form onSubmit={login}>
+    <form onSubmit={handleAuthorizationData}>
       <label htmlFor="email">
         Email:
         <input
@@ -46,7 +38,7 @@ export const Auth = () => {
           minLength={8}
         />
       </label>
-      <button type="submit" onSubmit={login}>
+      <button type="submit" onSubmit={handleAuthorizationData}>
         Login
       </button>
     </form>
