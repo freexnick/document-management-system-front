@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const Nav = ({ status }) => {
+export const Nav = () => {
   return (
     <nav>
       <ul>
@@ -8,7 +8,7 @@ export const Nav = ({ status }) => {
           <Link to="/user">User</Link>
         </li>
         <li>
-          <Link to={`documents/${status?.userId}`}>Documents</Link>
+          <Link to="/documents">Documents</Link>
         </li>
       </ul>
     </nav>
