@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { deleteUser } from "../api/user";
 
 export const User = ({
-  user: { name, email, phone, role, spaceUsed, spaceLimit },
+  user: { _id, name, email, phone, role, spaceUsed, spaceLimit },
   status,
   fetchUsers,
 }) => {
   const handleUserDelete = async () => {
-    await deleteUser(email);
+    await deleteUser(_id);
     await fetchUsers();
   };
 
@@ -35,7 +35,7 @@ export const User = ({
           </tr>
         </tbody>
       </table>
-      {status.role === "admin" && <Link to={`/update/${email}`}>Update</Link>}
+      {status.role === "admin" && <Link to={`/update/${_id}`}>Update</Link>}
       {status.role === "admin" && (
         <button onClick={handleUserDelete}>Delete</button>
       )}

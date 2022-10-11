@@ -5,7 +5,7 @@ import { Auth } from "./Auth/Auth";
 import { HandleUser } from "./User/HandleUser";
 import { useAuthContext } from "./Auth/AuthContext";
 import { useEffect } from "react";
-import { Upload } from "./documents/Upload";
+import { Documents } from "./documents/Documents";
 
 export const App = () => {
   const { status } = useAuthContext();
@@ -17,20 +17,15 @@ export const App = () => {
 
   return (
     <>
+      {status?.isLogged && <Nav />}
       <Routes>
         {status?.isLogged ? (
           <>
-            <Route path="/" element={<Nav status={status} />} />
+            <Route path="/" element={<Auth />} />
             <Route path="/user" element={<UserList />} />
-            <Route path="/add" element={<HandleUser />} />
-            <Route
-              path="/update/:email"
-              element={<HandleUser status={status} />}
-            />
-            <Route
-              path="/documents/:email"
-              element={<Upload status={status} />}
-            />
+            <Route path="/add" element={<HandleUser status={status} />} />
+            <Route path="/update/:id" element={<HandleUser />} />
+            <Route path="/documents" element={<Documents status={status} />} />
             <Route path="*" element={<Navigate to="/" />} />
           </>
         ) : (
