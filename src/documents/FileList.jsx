@@ -7,7 +7,8 @@ export const FileList = ({ getFiles, documents }) => {
     await getFiles();
   };
 
-  const handleFileDownload = async (path) => await downloadFile(path);
+  const handleFileDownload = async (path, fileName) =>
+    await downloadFile(path, fileName);
 
   return (
     <>

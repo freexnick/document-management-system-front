@@ -13,7 +13,7 @@ export const FileElement = ({
             <li>{item.visibility}</li>
             <li>{item.createdAt}</li>
           </ul>
-          <button onClick={() => handleFileDownload(item.file)}>
+          <button onClick={() => handleFileDownload(item.file, item.name)}>
             Download
           </button>
           <button onClick={() => handleFileDelete(item._id)}>Delete</button>
