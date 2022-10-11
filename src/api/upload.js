@@ -1,14 +1,16 @@
 import axios from "axios";
 import { URL } from "../utils/config";
 
-export const fileUpload = async (data, id) => {
+export const fileUpload = async ({ owner, email, file, visibility }) => {
   const formData = new FormData();
-  formData.append("file", data);
+  formData.append("owner", owner);
+  formData.append("visibility", visibility);
+  formData.append("email", email);
+  formData.append("file", file);
 
-  const result = await axios.post(`${URL}/upload/${id}`, formData, {
+  await axios.post(`${URL}/upload/${owner}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-  console.log(result);
 };
