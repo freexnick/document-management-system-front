@@ -22,8 +22,8 @@ const createUser = async (data) =>
     },
   });
 
-const deleteUser = async (data) =>
-  await axios.delete(`${URL}/user/${data}`, {
+const deleteUser = async (id) =>
+  await axios.delete(`${URL}/user/${id}`, {
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },

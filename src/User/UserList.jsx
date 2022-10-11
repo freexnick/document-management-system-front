@@ -3,32 +3,50 @@ import { User } from "./User";
 import { useAuthContext } from "../Auth/AuthContext";
 import { Link } from "react-router-dom";
 import { getUsers } from "../api/user";
-import { deleteUser } from "../api/user";
+import { Search } from "../common/Search";
+import { findUser } from "../api/search";
 
 export const UserList = () => {
-  const [users, setUsers] = useState([]);
   const { status } = useAuthContext();
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchUsers = async () => {
     const result = await getUsers();
     setUsers(result);
   };
 
+  const lookUpUser = async (searchTerm) => {
+    const { data } = await findUser(searchTerm);
+    setUsers(data);
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      lookUpUser(searchTerm);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm]);
+
   return (
     <div>
-      {status.role === "admin" ? <Link to="/add">Add</Link> : null}
-      {users?.map((user) => (
-        <User
-          user={user}
-          key={user._id}
-          status={status}
-          fetchUsers={fetchUsers}
-        />
-      ))}
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <div>
+        {status.role === "admin" ? <Link to="/add">Add</Link> : null}
+        {users?.map((user) => (
+          <User
+            user={user}
+            key={user._id}
+            status={status}
+            fetchUsers={fetchUsers}
+          />
+        ))}
+      </div>
     </div>
   );
 };

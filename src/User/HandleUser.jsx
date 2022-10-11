@@ -12,7 +12,7 @@ export const HandleUser = () => {
     phone: "",
     role: "user",
     spaceUsed: 0,
-    spaceLimit: 25000,
+    spaceLimit: 25,
   });
   const navigate = useNavigate();
   const params = useParams();
@@ -28,8 +28,8 @@ export const HandleUser = () => {
     navigate("/user");
   };
 
-  const getUpdatableUser = async () => {
-    const { data } = await getUser(params.email);
+  const getUpdatableUser = async (id) => {
+    const { data } = await getUser(id);
     delete data._id;
     if (data?.phone === null) data.phone = "";
     setUserData((prev) => ({ ...prev, ...data }));
@@ -42,12 +42,12 @@ export const HandleUser = () => {
   };
 
   useEffect(() => {
-    getUpdatableUser();
-  }, [params]);
+    if (params?.id) getUpdatableUser(params?.id);
+  }, [params?.id]);
 
   return (
     <div>
-      <form onSubmit={params ? updateCurrentUser : createNewUser}>
+      <form onSubmit={params?.id ? updateCurrentUser : createNewUser}>
         <label htmlFor="name">
           Name*:
           <input
@@ -80,7 +80,7 @@ export const HandleUser = () => {
             placeholder="password"
             onChange={updateUserData}
             value={userData?.password}
-            required={params ? false : true}
+            required={params?.id ? false : true}
           />
         </label>
         <label htmlFor="phone">
@@ -102,9 +102,9 @@ export const HandleUser = () => {
         </select>
         <button
           type="submit"
-          onSubmit={params ? updateCurrentUser : createNewUser}
+          onSubmit={params?.id ? updateCurrentUser : createNewUser}
         >
-          {params ? "Update" : "Add"}
+          {params?.id ? "Update" : "Add"}
         </button>
       </form>
     </div>
