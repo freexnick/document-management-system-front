@@ -1,3 +1,4 @@
 const DEST = "http://localhost";
 const PORT = 8000;
-export const URL = `${DEST}:${PORT}`;
+const VERSION = "/api/v1";
+export const URL = `${DEST}:${PORT}${VERSION}`;
