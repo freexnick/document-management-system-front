@@ -6,7 +6,7 @@ import { getDocuments } from "../api/documents";
 import { findDocument } from "../api/search";
 
 export const Documents = () => {
-  const [documents, setDocuments] = useState(null);
+  const [documents, setDocuments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const getFiles = async () => {
