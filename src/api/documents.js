@@ -5,6 +5,9 @@ const getDocuments = async () => {
   const { data } = await axios.get(`${URL}/documents`);
   return data;
 };
+
+const getPublicDocuments = async () => await axios.get(`${URL}/public`);
+
 const deleteDocument = async (id) =>
   await axios.delete(`${URL}/documents/${id}`, {
     headers: {
@@ -26,4 +29,4 @@ const downloadFile = async (path, fileName) => {
   link.remove();
 };
 
-export { getDocuments, deleteDocument, downloadFile };
+export { getDocuments, deleteDocument, downloadFile, getPublicDocuments };
