@@ -38,14 +38,15 @@ export const UserList = () => {
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div>
         {status.role === "admin" ? <Link to="/add">Add</Link> : null}
-        {users?.map((user) => (
-          <User
-            user={user}
-            key={user._id}
-            status={status}
-            fetchUsers={fetchUsers}
-          />
-        ))}
+        {Array.isArray(users) &&
+          users?.map((user) => (
+            <User
+              user={user}
+              key={user._id}
+              status={status}
+              fetchUsers={fetchUsers}
+            />
+          ))}
       </div>
     </div>
   );
