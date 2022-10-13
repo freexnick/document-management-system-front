@@ -32,10 +32,10 @@ export const Documents = () => {
   }, []);
 
   return (
-    <>
-      <Upload getFiles={getFiles} />
+    <div className="documents_container">
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Upload getFiles={getFiles} />
       <FileList documents={documents} getFiles={getFiles} />
-    </>
+    </div>
   );
 };

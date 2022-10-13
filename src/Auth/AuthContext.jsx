@@ -8,14 +8,13 @@ const AuthContextProvider = ({ children }) => {
   const [status, setStatus] = useState({});
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (status.isLogged) navigate("/");
-  }, [status]);
-
   const handleAuthorization = async (e, data) => {
     e.preventDefault();
     const result = await login(data);
-    if (result) setStatus({ isLogged: true, ...result.data });
+    if (result?.data) {
+      setStatus({ isLogged: true, ...result.data });
+      navigate("/user");
+    }
   };
 
   const handleLogout = async () => {
@@ -25,7 +24,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ status, handleAuthorization, handleLogout }}>
+    <AuthContext.Provider
+      value={{ status, handleAuthorization, handleLogout, setStatus }}
+    >
       {children}
     </AuthContext.Provider>
   );

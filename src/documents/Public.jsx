@@ -15,8 +15,8 @@ export const Public = () => {
   }, []);
 
   return (
-    <>
+    <div className="documents_container">
       <FileList documents={documents} />
-    </>
+    </div>
   );
 };

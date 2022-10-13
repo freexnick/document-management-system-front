@@ -4,7 +4,7 @@ export const Search = ({ searchTerm, setSearchTerm }) => {
   };
 
   return (
-    <>
+    <div className="search_form">
       <label htmlFor="search">
         Search:
         <input
@@ -15,6 +15,6 @@ export const Search = ({ searchTerm, setSearchTerm }) => {
         />
       </label>
       <button type="submit">Search</button>
-    </>
+    </div>
   );
 };

@@ -11,12 +11,23 @@ export const FileList = ({ getFiles, documents }) => {
     await downloadFile(path, fileName);
 
   return (
-    <>
-      <FileElement
-        documents={documents}
-        handleFileDelete={handleFileDelete}
-        handleFileDownload={handleFileDownload}
-      />
-    </>
+    <div className="file_container">
+      <table className="file_table">
+        <thead>
+          <tr>
+            <td>File Name:</td>
+            <td>Owner:</td>
+            <td>Visibility:</td>
+            <td>Created:</td>
+            <td>Actions:</td>
+          </tr>
+        </thead>
+        <FileElement
+          documents={documents}
+          handleFileDelete={handleFileDelete}
+          handleFileDownload={handleFileDownload}
+        />
+      </table>
+    </div>
   );
 };
