@@ -82,6 +82,7 @@ thead td {
   place-content: center center;
   place-items: center;
   flex: 1 1 290px;
+  height:32px;
 }
 
 tbody td {
@@ -159,15 +160,16 @@ tbody tr {
 .nav_bar{
   display:flex;
   justify-content: space-between;
+  align-items:center;
   width:100%;
-  margin-top:10px;
+  margin:10px auto;
 }
 
 .nav_bar button{
   background-color: #2a9d8f;
   color: #f0f0f0;
   margin-right:10px;
-  height:48px;
+  height:28px;
 }
 
 .nav_list{
@@ -195,7 +197,6 @@ tbody tr {
   place-content: space-evenly center;
   place-items:center center;
   width:100%;
-  margin:16px auto;
 }
 
 .search_form input {
@@ -351,10 +352,17 @@ tbody tr {
   margin:0 3px;
 }
 
+.upload_form button {
+  background-color: #2a9d8f;
+  color: #f0f0f0;
+}
+
 .upload_form select:focus {
   outline: 1px solid #2a9d8f;
   outline-color: #2a9d8f;
 }
+
+
 
 .file_container {
   display: flex;
