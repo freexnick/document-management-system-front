@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getPublicDocuments } from "../api/documents";
+import { useSearchContext } from "../Search/SearchContext";
+import { useDocumentsContext } from "./DocumentsContext";
 import { FileList } from "./FileList";
 
 export const Public = () => {
-  const [documents, setDocuments] = useState([]);
+  const { documents, setDocuments } = useDocumentsContext();
+  const { searchTerm } = useSearchContext();
 
   const getPublicDocs = async () => {
     const { data } = await getPublicDocuments();
@@ -11,8 +14,11 @@ export const Public = () => {
   };
 
   useEffect(() => {
-    getPublicDocs();
-  }, []);
+    setDocuments([]);
+    if (!searchTerm) {
+      getPublicDocs();
+    }
+  }, [searchTerm]);
 
   return (
     <div className="documents_container">

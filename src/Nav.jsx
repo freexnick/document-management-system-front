@@ -1,9 +1,11 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuthContext } from "./Auth/AuthContext";
-import { Search } from "./common/Search";
+import { Search } from "./Search/Search";
 
 export const Nav = () => {
-  const { handleLogout } = useAuthContext();
+  const { status, handleLogout } = useAuthContext();
+  const location = useLocation();
+
   const activeStyle = {
     textDecoration: "underline",
     color: "#2a9d8f",
@@ -41,9 +43,11 @@ export const Nav = () => {
             </li>
           </ul>
         </nav>
+        {(status?.role !== "user" || location.pathname !== "/user") && (
+          <Search />
+        )}
         <button onClick={handleLogout}>Logout</button>
       </div>
-      <Search />
       <Outlet />
     </>
   );
