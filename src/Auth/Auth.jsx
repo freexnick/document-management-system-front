@@ -16,14 +16,14 @@ export const Auth = () => {
   const handleAuthorizationData = (e) => handleAuthorization(e, loginData);
 
   useEffect(() => {
-    if (status.isLogged) navigate("/");
+    if (status.isLogged) navigate("/user");
   }, []);
 
   return (
-    <>
+    <div className="auth_container">
       {!status?.isLogged && (
-        <form onSubmit={handleAuthorizationData}>
-          <label htmlFor="email">
+        <form onSubmit={handleAuthorizationData} className="auth_form">
+          <label htmlFor="email" className="auth_email">
             Email:
             <input
               id="email"
@@ -34,7 +34,7 @@ export const Auth = () => {
               value={loginData?.email}
             />
           </label>
-          <label htmlFor="password">
+          <label htmlFor="password" className="auth_password">
             Password:
             <input
               id="password"
@@ -46,11 +46,15 @@ export const Auth = () => {
               minLength={8}
             />
           </label>
-          <button type="submit" onSubmit={handleAuthorizationData}>
+          <button
+            type="submit"
+            className="auth_button"
+            onSubmit={handleAuthorizationData}
+          >
             Login
           </button>
         </form>
       )}
-    </>
+    </div>
   );
 };

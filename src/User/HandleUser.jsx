@@ -29,10 +29,13 @@ export const HandleUser = () => {
   };
 
   const getUpdatableUser = async (id) => {
-    const { data } = await getUser(id);
-    delete data._id;
-    if (data?.phone === null) data.phone = "";
-    setUserData((prev) => ({ ...prev, ...data }));
+    const result = await getUser(id);
+    const data = result?.data[0];
+    if (result) {
+      delete data._id;
+      if (data?.phone === null) data.phone = "";
+      setUserData((prev) => ({ ...prev, ...data }));
+    }
   };
 
   const updateCurrentUser = async (e) => {
@@ -46,8 +49,11 @@ export const HandleUser = () => {
   }, [params?.id]);
 
   return (
-    <div>
-      <form onSubmit={params?.id ? updateCurrentUser : createNewUser}>
+    <div className="user_container">
+      <form
+        className="user_form"
+        onSubmit={params?.id ? updateCurrentUser : createNewUser}
+      >
         <label htmlFor="name">
           Name*:
           <input
@@ -93,7 +99,7 @@ export const HandleUser = () => {
             value={userData?.phone}
           />
         </label>
-        <select onChange={setUserRole}>
+        <select className="user_role" onChange={setUserRole}>
           Role:
           <option defaultChecked value="user">
             User
@@ -102,6 +108,7 @@ export const HandleUser = () => {
         </select>
         <button
           type="submit"
+          className="user_button"
           onSubmit={params?.id ? updateCurrentUser : createNewUser}
         >
           {params?.id ? "Update" : "Add"}

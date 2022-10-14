@@ -3,17 +3,18 @@ import { User } from "./User";
 import { useAuthContext } from "../Auth/AuthContext";
 import { Link } from "react-router-dom";
 import { getUsers } from "../api/user";
-import { Search } from "../common/Search";
 import { findUser } from "../api/search";
+import { useSearchContext } from "../Search/SearchContext";
 
 export const UserList = () => {
-  const { status } = useAuthContext();
+  const { status, setStatus } = useAuthContext();
+  const { searchTerm } = useSearchContext();
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchUsers = async () => {
     const result = await getUsers();
-    setUsers(result);
+    setStatus((prev) => ({ ...prev, ...result?.requestedBy }));
+    setUsers(result?.data || result);
   };
 
   const lookUpUser = async (searchTerm) => {
@@ -22,31 +23,50 @@ export const UserList = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (!searchTerm) {
+      fetchUsers();
+    }
+  }, [searchTerm]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      lookUpUser(searchTerm);
-    }, 2000);
+    if (searchTerm) {
+      const timeout = setTimeout(() => {
+        lookUpUser(searchTerm);
+      }, 2000);
 
-    return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout);
+    }
   }, [searchTerm]);
 
   return (
-    <div>
-      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div>
-        {status.role === "admin" ? <Link to="/add">Add</Link> : null}
-        {Array.isArray(users) &&
-          users?.map((user) => (
-            <User
-              user={user}
-              key={user._id}
-              status={status}
-              fetchUsers={fetchUsers}
-            />
-          ))}
+    <div className="user_list">
+      <div className="user_table">
+        {status.role === "admin" ? (
+          <Link to="/add" className="user_add">
+            Add
+          </Link>
+        ) : null}
+        <table>
+          <thead>
+            <tr>
+              <td>Name:</td>
+              <td>Email:</td>
+              <td>Phone:</td>
+              <td>Role:</td>
+              <td>Space left:</td>
+              {status.role === "admin" && <td>Actions:</td>}
+            </tr>
+          </thead>
+          {Array.isArray(users) &&
+            users?.map((user) => (
+              <User
+                user={user}
+                key={user._id}
+                status={status}
+                fetchUsers={fetchUsers}
+              />
+            ))}
+        </table>
       </div>
     </div>
   );

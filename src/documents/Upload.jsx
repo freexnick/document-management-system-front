@@ -17,12 +17,13 @@ export const Upload = ({ getFiles }) => {
 
   return (
     <>
-      <form onSubmit={handleFileSubmission}>
+      <form className="upload_form" onSubmit={handleFileSubmission}>
         <input
           type="file"
           name="file"
           id="file"
           accept=".doc, .docx,.txt,.pdf"
+          className="upload_file"
         />
         <select>
           <option value="public" defaultChecked>
