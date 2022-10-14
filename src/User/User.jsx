@@ -19,7 +19,7 @@ export const User = ({
           <td>{email}</td>
           <td>{phone || "Empty"} </td>
           <td>{role}</td>
-          <td>{(spaceLimit - spaceUsed).toFixed(2)}Mb</td>
+          <td>{(spaceLimit - spaceUsed).toFixed(2)} MB</td>
           {status.role === "admin" && (
             <td className="table_action">
               <Link to={`/update/${_id}`} alt="edit user">

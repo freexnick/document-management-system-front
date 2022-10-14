@@ -3,13 +3,13 @@ import { User } from "./User";
 import { useAuthContext } from "../Auth/AuthContext";
 import { Link } from "react-router-dom";
 import { getUsers } from "../api/user";
-import { Search } from "../common/Search";
 import { findUser } from "../api/search";
+import { useSearchContext } from "../Search/SearchContext";
 
 export const UserList = () => {
   const { status, setStatus } = useAuthContext();
+  const { searchTerm } = useSearchContext();
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchUsers = async () => {
     const result = await getUsers();
@@ -23,11 +23,13 @@ export const UserList = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (!searchTerm) {
+      fetchUsers();
+    }
+  }, [searchTerm]);
 
   useEffect(() => {
-    if (searchTerm.length) {
+    if (searchTerm) {
       const timeout = setTimeout(() => {
         lookUpUser(searchTerm);
       }, 2000);
@@ -38,7 +40,6 @@ export const UserList = () => {
 
   return (
     <div className="user_list">
-      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className="user_table">
         {status.role === "admin" ? (
           <Link to="/add" className="user_add">
